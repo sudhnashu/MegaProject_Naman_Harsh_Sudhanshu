@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap" rel="stylesheet">
+    <title>Navbar</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        .container{
+            height: 70px;
+            width: 100%;
+            background-color: rgb(217, 220, 232);
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+        }
+       
+        .rightSide{
+         display: flex;
+         justify-content: space-around;
+         text-align: center;
+         align-items: center;
+
+        }
+        input{
+            padding: 5px;
+            border-radius: 10%;
+            height: 40px;
+            width: 100px;
+            border: 1px solid  rgb(1, 4, 15);
+            background-color:  rgb(226, 229, 237);
+            color: rgb(4, 49, 47);
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: large;
+        }
+        button{
+            border-radius: 20%;
+            height: 40px;
+            border: 1px solid  rgb(234, 236, 244);
+     
+        }
+        img{
+            height: 40px;
+            width: 40px;
+            margin-right: 30px;
+            margin-left: 20px;
+            border: 3px solid blue;
+        }
+        .leftSide{
+       display: flex;
+       text-align: center;
+         align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="leftSide">
+     <img src="/images/buses.png" alt="">
+      <h1>Transport Made Easy</h1>
+    </div>
+    <div class="rightSide">
+        <button>
+            <form action="/login.ejs">
+            <input type="submit" value="Home" >
+        </form>
+
+        </button>
+
+        <button>
+            <form action="/login.ejs">
+            <input type="submit" value="About Us">
+        </form>
+
+        </button>
+
+        <button>
+            <form action="/login.ejs">
+            <input type="submit" value="Contact Us">
+        </form>
+
+        </button>
+
+        <button>
+            <form action="/login.ejs">
+            <input type="submit" value="Sign Up">
+        </form>
+
+        </button>
+    </div>
+</div>
+</body>
+</html>
