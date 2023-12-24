@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap" rel="stylesheet">
     <title>Navbar</title>
     <style>
         *{
             margin: 0px;
             padding: 0px;
         }
-        .container{
+        .navbar-container{
             height: 70px;
             width: 100%;
-            background-color: rgb(217, 220, 232);
+            background-color: rgb(15, 49, 222);
             display: grid;
             grid-template-columns: 2fr 1fr;
+            position: sticky;
         }
        
         .rightSide{
@@ -27,70 +28,71 @@
          align-items: center;
 
         }
-        input{
+        @keyframes example {
+ from {transform: scale(1);}
+ to {transform: scale(2);}
+}
+.navbar-input{
             padding: 5px;
             border-radius: 10%;
             height: 40px;
-            width: 100px;
-            border: 1px solid  rgb(1, 4, 15);
-            background-color:  rgb(226, 229, 237);
-            color: rgb(4, 49, 47);
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            width: 110px;
+            border: 3px solid  rgb(1, 6, 22);
+            background-color:  rgb(4, 20, 97);
+            color: rgb(243, 246, 246); 
+            transition: transform 0.3s ease;
+            
             font-size: large;
+        }
+        .navbar-input:hower{
+            transform: scale(1.2);
+
         }
         button{
             border-radius: 20%;
             height: 40px;
-            border: 1px solid  rgb(234, 236, 244);
+            border: 1px solid  rgb(12, 50, 240);
      
         }
-        img{
-            height: 40px;
-            width: 40px;
+        #icon{
+            height: 50px;
+            width: 50px;
             margin-right: 30px;
-            margin-left: 20px;
-            border: 3px solid blue;
+            margin-left: 10px;
+            border: 1px solid black;
         }
         .leftSide{
-       display: flex;
-       text-align: center;
+        display: flex;
+        text-align: center;
          align-items: center;
+        
+        }
+        #nameofcompany{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: #dfe9e8;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="navbar-container">
+
     <div class="leftSide">
-     <img src="/images/buses.png" alt="">
-      <h1>Transport Made Easy</h1>
+     <img src="/images/buses.png" id="icon" alt="">
+      <h1 id="nameofcompany">Transport Made Easy</h1>
     </div>
+
     <div class="rightSide">
         <button>
-            <form action="/login.ejs">
-            <input type="submit" value="Home" >
-        </form>
-
+            <form action="/login.ejs"> <input type="submit" class="navbar-input" value="Home" > </form>
         </button>
-
         <button>
-            <form action="/login.ejs">
-            <input type="submit" value="About Us">
-        </form>
-
+            <form action="/login.ejs">  <input type="submit" class="navbar-input" value="About Us"> </form>
         </button>
-
-        <button>
-            <form action="/login.ejs">
-            <input type="submit" value="Contact Us">
-        </form>
-
+        <button> 
+             <form action="/login.ejs"><input type="submit" class="navbar-input" value="Contact Us"></form>
         </button>
-
         <button>
-            <form action="/login.ejs">
-            <input type="submit" value="Sign Up">
-        </form>
-
+            <form action="/login.ejs">  <input type="submit" class="navbar-input" value="Sign Up"> </form>
         </button>
     </div>
 </div>
