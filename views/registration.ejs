@@ -37,12 +37,12 @@
 
 <div class="container-registration">
     <h1>REGISTRATION FORM</h1> 
-    <form action="/studentMainPage" id="reg-form">
+    <form action="/register-submit" id="reg-form" method ="post">
             <label for="fname" class="reg-label">Name Of Student :</label>
             <input type="text" class="reg-input" name="fname" required> <br>
 
-            <label for="lname" class="reg-label">grade :</label>
-            <input type="number" class="reg-input"  name="lname"> <br>
+            <label for="grade" class="reg-label">grade :</label>
+            <input type="number" class="reg-input"  name="grade"> <br>
 
             <label for="rollnum" class="reg-label">Roll Number :</label>
             <input type="number" class="reg-input"  name="rollnum"> <br>
@@ -56,13 +56,27 @@
             <label for="emailadd" class="reg-label">email :</label>
             <input type="email"  class="reg-input" name="emailadd"> <br>
 
+            
 
-            <label for="schoolname" class="reg-label">School Name :</label>
-            <input type="text"  class="reg-input" name="schoolname"> <br>
+            <label for="schoolname">Choose your School</label>
 
+            <select name="schoolname" >
+              <option value="xyz">xyz</option>
+              <option value="abc">abc</option>
+              <option value="mno">mno</option>
+              <option value="pqr">pqr</option>
+            </select>
+
+
+
+            <label for="password" class="reg-label">Password :</label>
+            <input type="password"  class="reg-input" name="password"> <br>
 
             <label for="address" class="reg-label">Pickup Location :</label>
             <input type="text"  class="reg-input" name="address"> <br>
+            <% if(locals.error) { %>
+                <strong style = "color :red "><%= error %></strong> <br>
+                <%}%>
             <input type="submit" value="Submit">
           </form>
 
