@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Profile Page</title>
+    <style>
+        .driver-profile-container{
+            height: 100vh;
+            width: 40%;
+            margin-left: 30%;
+            margin-top: 2%;
+            border: 10px solid black;
+            padding: 5%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-content: center;
+        }
+    </style>
+</head>
+<body>
+    <%- include("navbar.ejs") %>
+    <div class="driver-profile-container">
+      <h3>Name : <%= locals.nameOfDriver %> </h3>
+      <h3>Driver id : <%= locals.driverId %> </h3>
+      <h3>contact number : <%= locals.contactNumber %> </h3>
+      <h3>contact Email : <%= locals.contactEmail %> </h3>
+      <h3>Licence Number : <%= locals.LicenceNum %> </h3>
+      <h3>Expiry Date : <%= locals.ExpiryDate %> </h3>
+      <h3>Bus Number : <%= locals.busNumber %> </h3>
+      <h3>Bus Route: <%= locals.busRoute %> </h3>
+      
+
+      
+    </div>
+</body>
+</html>

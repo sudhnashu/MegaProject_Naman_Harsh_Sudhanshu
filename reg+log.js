@@ -96,16 +96,24 @@ if(type === 'student'){
 }
 else if(type === 'driver'){
     try{
-        const response = await db.query("SELECT * FROM drivers WHERE contact_email = $1",[email]);
-        const passCheck = await bcrypt.compare(pass,response.rows[0].password);
-        if(passCheck == true){
-            console.log("render driver profile page");
-        }
-        else{
-            res.render('login.ejs',{
-                error : "invalid username/password",
-            });
-        }
+   const data=await db.query("SELECT * FROM drivers WHERE driver_email=$1,[email]");
+   if(passCheck == true){
+    res.render('profile.ejs', {
+        nameOfDriver: data.driver_name,
+        contactNumber: data.contact_phone,
+        contactEmail: data.contact_email,
+        LicenceEmail: data.contact_email,
+        ExpiryDate: data.license_expiry,
+        driverId: data.driver_id,
+        LicenceNum: data.license_number
+    });
+   }
+   else{
+    res.render('login.ejs',{
+        error : "invalid username/password",
+    });
+}
+
     }
     catch(err){
         res.render('login.ejs',{

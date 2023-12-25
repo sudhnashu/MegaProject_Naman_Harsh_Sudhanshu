@@ -6,11 +6,9 @@ const port = 5000;
 app.use(express.static("public"));
 
 app.get("/" , (req,res) => {
-    res.render("registration.ejs");
+    res.render("profile.ejs");
     });
     
-app.post
-
 app.listen(port,()=>{
     console.log(`listening on port ${port}`);
 });
