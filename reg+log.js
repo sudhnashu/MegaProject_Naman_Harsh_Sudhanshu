@@ -11,8 +11,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const db = new pg.Client({
     user : "postgres",
     host : "localhost",
-    database : "",
-    password:"",
+    database : "Transport-ease",
+    password:"naman918",
     port:5432,
     });
     db.connect();
@@ -61,8 +61,26 @@ if(type === 'student'){
     try{
         const response = await db.query("SELECT * FROM students WHERE contact_email = $1",[email]);
         const passCheck = await bcrypt.compare(pass,response.rows[0].password);
+        const result = response.rows[0];
+        console.log(result);
         if(passCheck == true){
-            console.log("render student profile page");
+            var busRoute = {
+                origin : "ranchi",
+                destination : "chaibasa"
+               }
+            var busSchedule = [{day_of_week : "Monday",departure_time : "7:25 A.M",arrival_time: "7:20 A.M" },{day_of_week : "tuesday",departure_time : "7:25 A.M",arrival_time: "7:20 A.M" }];
+        res.render("student_profile.ejs",{
+            student_name : result.student_name,
+            school_id : result.school_id,
+            grade : result.grade,
+            parent_guardian_name :result.parent_guardian_name,
+            contact_phone: result.contact_phone,
+            contact_email : result.contact_email,
+            address : result.address,
+            rollno : result.rollno,
+            busSchedule : busSchedule,
+            busRoute : busRoute
+        })
         }
         else{
             res.render('login.ejs',{
