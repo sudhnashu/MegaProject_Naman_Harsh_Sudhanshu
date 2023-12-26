@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const db = new pg.Client({
     user : "postgres",
     host : "localhost",
-    database : "",
+    database : "Transport-ease",
     password:"",
     port:5432,
     });
@@ -58,19 +58,40 @@ const email = req.body.email;
 const pass = req.body.password;
 const type = req.body.type;
 if(type === 'student'){
-    try{
-        const response = await db.query("SELECT * FROM students WHERE contact_email = $1",[email]);
-        const passCheck = await bcrypt.compare(pass,response.rows[0].password);
-        if(passCheck == true){
-            console.log("render student profile page");
-        }
-        else{
-            res.render('login.ejs',{
-                error : "invalid username/password",
-            });
-        }
+        try{
+            const response = await db.query("SELECT * FROM students WHERE contact_email = $1",[email]);
+            const passCheck = await bcrypt.compare(pass,response.rows[0].password);
+           const result = response.rows[0];
+            if(passCheck === true && response.rows[0].verified === true){
+                var busRoute = {
+                    origin : "ranchi",
+                    destination : "chaibasa"
+                   }
+                var busSchedule = [{day_of_week : "Monday",departure_time : "7:25 A.M",arrival_time: "7:20 A.M" },{day_of_week : "tuesday",departure_time : "7:25 A.M",arrival_time: "7:20 A.M" }];
+            res.render("student_profile.ejs",{
+                student_name : result.student_name,
+                school_id : result.school_id,
+                grade : result.grade,
+                parent_guardian_name :result.parent_guardian_name,
+                contact_phone: result.contact_phone,
+                contact_email : result.contact_email,
+                address : result.address,
+                rollno : result.rollno,
+                busSchedule : busSchedule,
+                busRoute : busRoute
+            })
+            }
+            else if(passCheck === true & response.rows[0].verified === false){
+                res.render("not_verified.ejs")
+            }
+            else{
+                res.render('login.ejs',{
+                    error : "invalid username/password",
+                });
+            }
     }
     catch(err){
+        console.log("error: " + err)
         res.render('login.ejs',{
             error : "invalid username/password",
         });
@@ -78,8 +99,14 @@ if(type === 'student'){
 }
 else if(type === 'driver'){
     try{
-   const data=await db.query("SELECT * FROM drivers WHERE driver_email=$1,[email]");
-   if(passCheck == true){
+   const response =await db.query("SELECT * FROM drivers WHERE contact_email=$1",[email]);
+   const data = response.rows[0];
+   if(pass == data.password){
+    var busRoute = {
+        origin : "ranchi",
+        destination : "chaibasa"
+       }
+    var busSchedule = [{day_of_week : "Monday",departure_time : "7:25 A.M",arrival_time: "7:20 A.M" },{day_of_week : "tuesday",departure_time : "7:25 A.M",arrival_time: "7:20 A.M" }];
     res.render('profile.ejs', {
         nameOfDriver: data.driver_name,
         contactNumber: data.contact_phone,
@@ -87,7 +114,9 @@ else if(type === 'driver'){
         LicenceEmail: data.contact_email,
         ExpiryDate: data.license_expiry,
         driverId: data.driver_id,
-        LicenceNum: data.license_number
+        LicenceNum: data.license_number,
+        busSchedule : busSchedule,
+        busRoute : busRoute
     });
    }
    else{
@@ -104,7 +133,6 @@ else if(type === 'driver'){
     }
 }
 });
-
 app.listen(port,()=>{
     console.log(`listening on port ${port}`);
 });
