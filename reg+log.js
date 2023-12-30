@@ -6,7 +6,6 @@ const app = express();
 const port = 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
-
 //data base connect
 const db = new pg.Client({
     user : "postgres",
@@ -32,10 +31,8 @@ const contact_email = req.body.emailadd;
 const school_name = req.body.schoolname;
 const address = req.body.address;
 const pass = req.body.password;
-console.log(pass);
 //hashing the password befor storing 
 const password = await bcrypt.hash(pass,13);
-console.log(password);
  const response = await db.query("SELECT school_id FROM schools where school_name = $1",[school_name]);
 try{
     await db.query("INSERT INTO students (student_name,school_id,grade,parent_guardian_name,contact_phone,contact_email,verified,password,address,rollno) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",[student_name,response.rows[0].school_id,grade,parent_guardian_name,contact_phone,contact_email,'FALSE',password,address,rollnum]);
@@ -133,6 +130,7 @@ else if(type === 'driver'){
     }
 }
 });
+
 app.listen(port,()=>{
     console.log(`listening on port ${port}`);
 });

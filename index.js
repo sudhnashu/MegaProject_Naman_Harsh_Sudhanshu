@@ -6,7 +6,7 @@ const port = 5000;
 app.use(express.static("public"));
 
 app.get("/" , (req,res) => {
-    res.render("profile.ejs");
+    console.log("");
     });
     
 app.listen(port,()=>{
