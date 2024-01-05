@@ -6,7 +6,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config({ silent: process.env.NODE_ENV === 'production' });
 const app = express();
-const port = 5000;
+const port = 3000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 //data base connect
@@ -217,9 +217,6 @@ app.post('/reviews', async (req, res) => {
 }
 });
 
-        app.listen(port,()=>{
-            console.log(`listening on port ${port}`);
-        });
 app.listen(port,()=>{
-    console.log(`listening on port the ${port}`);
-});
+    console.log(`listening on port ${port}`);
+    });
