@@ -125,6 +125,13 @@ a:hover {
 .photo{
     float: right;
 }
+#map {
+    display: flex;
+    margin-left: 20%;
+    margin-right: 30%;
+    height: 500px;
+    width: 60%;
+  }
 
     </style>
 </head>
@@ -137,13 +144,13 @@ a:hover {
                 <img src="https://picsum.photos/200" alt="Student Photo">
             </div>
             <p><strong>Name:</strong> <%= student_name %></p>
-            <p><strong>School ID:</strong> <%= school_id %></p>
+            <p><strong>Roll Number:</strong> <%= rollno %></p>
             <p><strong>Grade:</strong> <%= grade %></p>
             <p><strong>Parent/Guardian Name:</strong> <%= parent_guardian_name %></p>
             <p><strong>Contact Phone:</strong> <%= contact_phone %></p>
             <p><strong>Contact Email:</strong> <%= contact_email %></p>
+            <p><strong>School ID:</strong> <%= school_id %></p>
             <p><strong>Address:</strong> <%= address %></p>
-            <p><strong>Roll Number:</strong> <%= rollno %></p>
         </div>
 
         <div class="bus-schedule">
@@ -175,6 +182,106 @@ a:hover {
             <p><strong>Destination:</strong> <%= busRoute.destination %></p>
         
         </div>
+
+        <div id="map"></div>
+                <input type="hidden" id="startLat" value="<%= start.lat %>">
+                <input type="hidden" id="startLng" value="<%= start.lng %>">
+                <input type="hidden" id="endLat" value="<%= end.lat %>">
+                <input type="hidden" id="endLng" value="<%= end.lng %>">
+                <input type="hidden" id="waypoints" value='<%= JSON.stringify(waypoints) %>'>
+                <script>
+                    function initializeMap() {
+                    // Retrieve values from hidden input fields
+                    const start = {
+                        lat: parseFloat(document.getElementById("startLat").value),
+                        lng: parseFloat(document.getElementById("startLng").value)
+                    };
+                    const end = {
+                        lat: parseFloat(document.getElementById("endLat").value),
+                        lng: parseFloat(document.getElementById("endLng").value)
+                    };
+                    const waypointsDataString = document.getElementById("waypoints").value;
+                    const waypointsData = JSON.parse(waypointsDataString);
+
+                    // Transform the array into the required waypoint format
+                    var waypointArr = [];
+                    for (var i = 0; i < waypointsData.length; i++) {
+                        waypointArr.push({
+                        location: {
+                            lat: parseFloat(waypointsData[i].lat),
+                            lng: parseFloat(waypointsData[i].lng)
+                        },
+                        stopover: true
+                        });
+                    }
+                    console.log(waypointArr);
+                    // Map initialization code using retrieved values
+                    const map = new google.maps.Map(document.getElementById("map"), {
+                        center: start,
+                        zoom: 10
+                    });
+
+                    const directionsService = new google.maps.DirectionsService();
+                    const directionsRenderer = new google.maps.DirectionsRenderer({
+                        map: map,
+                        suppressMarkers: true
+                    });
+
+                    const request = {
+                        origin: start,
+                        destination: end,
+                        waypoints: waypointArr,
+                        optimizeWaypoints: true,
+                        travelMode: google.maps.TravelMode.DRIVING,
+                    };
+
+                    directionsService.route(request, function (response, status) {
+                        if (status === 'OK') {
+                        directionsRenderer.setDirections(response);
+
+                        // Suppress default markers for origin and destination
+                        
+
+                        // Create markers for origin and destination without default markers
+                        const originMarker = new google.maps.Marker({
+                            position: start,
+                            map: map,
+                            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png', // Example: Green dot icon for origin
+                            title: 'Origin',
+                        });
+                        for(var i=0;i<waypointArr.length;i++) { 
+                            const waypointMarker = new google.maps.Marker({
+                            position: waypointArr[i].location,
+                            map: map,
+                            icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png', // Example: Green dot icon for origin
+                            title: 'way',
+                            });
+                        }//
+                        const destMarker = new google.maps.Marker({
+                            position: end,
+                            map: map,
+                            icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png', // Example: Yellow dot icon for destination
+                            title: 'Destination'
+                        });
+                        } else {
+                        window.alert('Directions request failed due to ' + status);
+                        }
+                    });
+                    }
+
+                    // Call the map initialization function when the page loads
+                    window.onload = function () {
+                        const apiKey = '<%= apiKey %>';
+                        const apiUrl = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initializeMap`;
+                
+                        const script = document.createElement('script');
+                        script.src = apiUrl;
+                        script.defer = true;
+                        script.async = true;
+                
+                        document.head.appendChild(script);
+                    };
+                </script>
     </div>
 </body>
 </html>
