@@ -6,7 +6,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config({ silent: process.env.NODE_ENV === 'production' });
 const app = express();
-const port = 3000;
+const port = 5000;
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 //data base connect
@@ -19,6 +19,30 @@ const db = new pg.Client({
     });
     db.connect();
 const apiKey = process.env.apiKey; 
+
+app.get("/", async (req, res) => {
+    try {
+        const response = await db.query("SELECT * FROM reviews WHERE stars >= 4 ");
+        const data = response.rows;
+        res.render("homepage.ejs", { data });  
+    } catch (err) {
+        console.error("Error executing query:", err);
+        res.status(500).send("Error fetching data");
+    }
+});
+
+
+// reviews page
+app.post('/reviews', async (req, res) => {
+    try {
+      // Insert reviews into PostgreSQL database  
+      await db.query("INSERT INTO reviews (name_of_student, review, stars) VALUES ($1, $2, $3)", [req.body.name, req.body.message,  JSON.parse(req.body.rating)]); 
+      res.redirect('/');
+    } catch (err) {
+      console.error('Error submitting review:', err);
+      res.status(500).send('Error submitting review');
+    }
+  });
     //registration
     app.get("/register" , (req,res) => {
         //render registration page
@@ -184,15 +208,18 @@ const apiKey = process.env.apiKey;
             });
         }
 
-            }
-            catch(err){
-                res.render('login.ejs',{
-                    error : "invalid username/password",
-                });
-            }
-        }
+    }
+    catch(err){
+        res.render('login.ejs',{
+            error : "invalid username/password",
         });
+    }
+}
+});
 
         app.listen(port,()=>{
             console.log(`listening on port ${port}`);
         });
+app.listen(port,()=>{
+    console.log(`listening on port the ${port}`);
+});
