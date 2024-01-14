@@ -54,7 +54,7 @@ h2 {
 /* Profile Information */
 .profile-info,
 .bus-schedule,
-.bus-route {
+.bus-route,.school-info,.driver-info{
     margin-bottom: 30px;
     padding-bottom: 20px;
     border-bottom: 1px solid var(--border-color);
@@ -62,11 +62,13 @@ h2 {
 
 .profile-info p,
 .bus-schedule p,
-.bus-route p {
+.bus-route p, .school-info p,.driver-info p{
     margin: 5px 0;
     line-height: 1.6;
 }
-
+.driver-info{
+    height: 250px;
+}
 /* Table Styling */
 table {
     width: 100%;
@@ -118,11 +120,14 @@ a:hover {
 
     .profile-info p,
     .bus-schedule p,
-    .bus-route p {
+    .bus-route p,.school-info p,.driver-info p {
         font-size: 14px;
     }
 }
 .photo{
+    float: right;
+}
+.driver-photo{
     float: right;
 }
 #map {
@@ -149,8 +154,18 @@ a:hover {
             <p><strong>Parent/Guardian Name:</strong> <%= parent_guardian_name %></p>
             <p><strong>Contact Phone:</strong> <%= contact_phone %></p>
             <p><strong>Contact Email:</strong> <%= contact_email %></p>
-            <p><strong>School ID:</strong> <%= school_id %></p>
             <p><strong>Address:</strong> <%= address %></p>
+        </div>
+
+        <div class="school-info">
+            <h2>School Information</h2>
+            <p><strong>School Name:</strong> <%= school_name %></p>
+            <p><strong>City:</strong> <%= city %></p>
+            <p><strong>State:</strong> <%= state %></p>
+            <p><strong>Country:</strong> <%= country %></p>
+            <p><strong>Postal Code:</strong> <%= postal_code %></p>
+            <p><strong>Contact Email:</strong> <%= school_contact_email %></p>
+            <p><strong>Contact Phone:</strong> <%= school_contact_phone %></p>
         </div>
 
         <div class="bus-schedule">
@@ -174,7 +189,19 @@ a:hover {
                 </tbody>
             </table>
         </div>
-      
+
+        <div class="driver-info">
+            <h2>Driver Information</h2>
+            <div class="driver-photo">
+                <img src="https://picsum.photos/150?random=1" alt="Student Photo">
+            </div>
+            <p><strong>Driver Name:</strong> <%= driver_name %></p>
+            <p><strong>Contact Phone:</strong> <%= drivcontact_phone %></p>
+            <p><strong>Contact Email:</strong> <%= drivcontact_email %></p>
+            <p><strong>License Number:</strong> <%= license_number %></p>
+            <p><strong>License Expiry:</strong> <%= license_expiry %></p>
+        </div>
+
         <div class="bus-route">
             <h2>Bus Route</h2>
            

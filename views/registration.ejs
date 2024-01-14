@@ -100,21 +100,19 @@
             <div class="form-row">
                 <label for="schoolname">Choose your School:</label>
                 <select name="schoolname">
-                    <option value="xyz">XYZ</option>
-                    <option value="abc">ABC</option>
-                    <option value="mno">MNO</option>
-                    <option value="pqr">PQR</option>
+                    <option value="Delhi Public School (DPS) Ranchi">Delhi Public School (DPS) Ranchi</option>
+                    <option value="St. Xavier's School">St. Xavier's School</option>
                 </select>
             </div>
 
             <div class="form-row">
                 <label for="password">Password:</label>
-                <input type="password" name="password">
+                <input type="password" name="password" required>
             </div>
 
             <div class="form-row">
                 <label for="address" id = "location">Pickup Location:</label>
-                <input type="text" id="autocomplete" name="location">
+                <input type="text" id="autocomplete" name="location" required>
             </div>
 
             <% if(locals.error) { %>
@@ -128,6 +126,7 @@
             const input = document.getElementById('autocomplete');
             const autocomplete = new google.maps.places.Autocomplete(input);
         }
+        try{
         window.onload = function () {
             const apiKey = '<%= apiKey %>';
             const apiUrl = ` https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=initAutocomplete`;
@@ -139,6 +138,10 @@
     
             document.head.appendChild(script);
         };
+    }
+    catch(err){
+        console.log(err.message);
+    }
     </script>
     
 </body>
